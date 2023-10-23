@@ -20,7 +20,7 @@ public class Main {
         CSVReader csvReader = new CSVReader(fileGenerator);
 
         File fileModus = new File(GENERATED_PATH+"data_sekolah_modus.txt");
-        File fileMedian = new File(GENERATED_PATH+"data_sekolah_modus_median.txt");
+        File fileMedian = new File(GENERATED_PATH+"data_sekolah_mean_median_modus.txt");
 
 
         try (Scanner inputScanner = new Scanner(System.in)) {
@@ -46,16 +46,23 @@ public class Main {
                             System.out.println("file "+ fileMedian.getName()+" already been created!");
                             break;
                         }
-
+                        csvReader.readFile(FILE_PATH);
+                        fileGenerator.writMeanMedianModus(GENERATED_PATH);
+                        menu.printSubMenu();
+                        input = inputScanner.nextInt();
                         break;
                     case 3:
-                        if (fileModus.exists() && fileMedian.exists()) {
+                        if (fileModus.exists() || fileMedian.exists()) {
                             System.out.println("both file already been created!");
                             break;
                         }
 
-                        
-                    break;
+                        csvReader.readFile(FILE_PATH);
+                        fileGenerator.writeModus(GENERATED_PATH);
+                        fileGenerator.writMeanMedianModus(GENERATED_PATH);
+                        menu.printSubMenu();
+                        input = inputScanner.nextInt();
+                        break;
 
                     default:
                         break;
@@ -66,7 +73,6 @@ public class Main {
         }catch(Exception  e){
             log.info("error: "+ e.getMessage());
         }
-
         
         
     }
